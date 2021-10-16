@@ -12,6 +12,9 @@ package association;
 
 //Lets attempt without ArrayList first, then try and adapt an ArrayList later.
 
+import java.util.Scanner;
+
+
 public class Alumni {
     private String name;
     private String address;
@@ -34,7 +37,6 @@ public class Alumni {
         this.occupation = occupation;
         this.organization = organization;
     } 
-    
     
     /***
      * 

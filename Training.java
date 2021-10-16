@@ -29,13 +29,13 @@ public class Training {
         this.duration = duration;
         this.room = room;
     }
-    
+
         /***
      * 
      * Getters and setters for course name 
      * @return the course name
      */
-    public String geCourse() {
+    public String getCourse() {
         return course;
     }
     public void setCourse(String course) {
@@ -123,4 +123,18 @@ public class Training {
     public void setRoom(String room) {
         this.room = room;
     }
+    
+        
+    
+   @Override
+   public String toString() {
+        return ("Event name: " + this.getCourse()+ " |" +
+                " Presenter: "  + this.getPresenter() + " |" +
+                " Seats: "      + this.getSeats() + " |" +
+                " Date: "       + this.getDate() + " |" +
+                " Time: "       + this.getTime() + " |" +
+                " Duration: "   + this.getDuration()  + " |" +
+                " Room: "       + this.getRoom());
+        
+   }
 }

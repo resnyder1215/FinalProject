@@ -7,6 +7,7 @@ package association;
 
 //This will be for collecting donations and funding events.
 public class Donations {
+    private String donator;
     private double donationIndiv;
     private double donationTotal;
     private double donationGoal;
@@ -20,16 +21,32 @@ public class Donations {
     
 /***
  * Overloaded constructor for Donations
+ * @param donator the person making the donation
  * @param donationIndiv the amount donated by an individual
  * @param donationTotal the amount total donated by all parties
  * @param donationGoal the goal to meet in donations
  */    
     
-    public Donations(double donationIndiv, double donationTotal, double donationGoal) {
+    public Donations(String donator, double donationIndiv, double donationTotal, double donationGoal) {
+        this.donator = donator;
         this.donationIndiv = donationIndiv;
         this.donationTotal = donationTotal;
         this.donationGoal = donationGoal;
     }
+    
+   /***
+     * Getters and setters for a donator
+     * @return the name of a donator
+     */
+    
+    public String getDonator(){
+        return donator;
+    }
+    public void setDonator(String donator){
+        this.donator = donator;
+        
+    }
+    
     
     /***
      * Getters and setters for individual donations
