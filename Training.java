@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package association;
 
 //The training should include course name, presenter name, available of seats, date, time, duration, and room
-public class Training {
+    public class Training {
     private String course;
     private String presenter;
     private int seats;

@@ -23,7 +23,9 @@ public class AlumniApp {
         ArrayList<Training> classes = new ArrayList<>();
         //Alumni[] students = new Alumni[COUNT];
         //Training[] classes = new Training[COUNT];
+        //Username 
         String User = "null";
+        //Session
         boolean logIn = false;
         int option;
         /** Run through the menu first, as loggedIn is FALSE
@@ -43,6 +45,10 @@ public class AlumniApp {
                     System.out.println(User);
                     studentListID++;
                 } 
+                /*else if (option == 2){
+                    
+                }*/
+                
                 //Other others will go here, testing creating/viewing events currently
                 else if (option == 4)
                 {
@@ -129,6 +135,7 @@ public class AlumniApp {
         event.setPresenter(input.next());
         System.out.println("How many seats are available?");
         event.setSeats(input.nextInt());
+        //PUT WAY TO CAPTURE SEATS HERE/CHANGE SEATS
         System.out.println("What date will this event take place?");
         event.setDate(input.next());
         System.out.println("What time will it start?");
@@ -142,7 +149,7 @@ public class AlumniApp {
 
     //method for registering new alumni
     public static String newAlumni(int studentListID, ArrayList students) {
-        String User;
+        String User;//the user name to be returned
         int id = studentListID;
         Scanner input = new Scanner(System.in);
         Alumni register = new Alumni();
