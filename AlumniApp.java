@@ -26,71 +26,74 @@ public class AlumniApp {
         //Username 
         String User = "null";
         //Session
-        boolean logIn = false;
+        boolean logIn = true;
         int option;
-        /** Run through the menu first, as loggedIn is FALSE
-         * If User is null, it will ask you to register 
-         * Otherwise you're presented with a full menu
+        /**
+         * Run through the menu first, as loggedIn is FALSE If User is null, it
+         * will ask you to register Otherwise you're presented with a full menu
          */
         do {
-            if ("null".equals(User)) 
-            {
+            if ("null".equals(User)) {
                 printMenuNew(); //Print the menu for a new user which asks them to register, but they can select other things
                 System.out.println("Please select an option!");
                 option = input.nextInt();
                 //If option is (1), it pulls the newAlumni method so that they can register as an alumni
-                if (option == 1) 
-                {
-                    User = newAlumni(studentListID, students);
-                    System.out.println(User);
-                    studentListID++;
-                } 
-                /*else if (option == 2){
-                    
+                switch (option) {
+                    /*else if (option == 2){
                 }*/
-                
-                //Other others will go here, testing creating/viewing events currently
-                else if (option == 4)
-                {
-                    menuEvent();
-                    option = input.nextInt();
-                    if (option == 1) 
-                    {
-                        newEvent(eventListID, classes);
-                        eventListID++;
-                    }    
-                    else if (option == 4)
-                    {
-                        for(int i = 0; i < classes.size(); i++) 
-                        System.out.println("[ " + (i + 1)  + " ]" + classes.get(i));
-                    }
-                    
+                    //Other others will go here, testing creating/viewing events currently
+                    case 1:
+                        User = newAlumni(studentListID, students);
+                        System.out.println(User);
+                        studentListID++;
+                        break;
+                    //This would be our escape sequence
+                    case 4:
+                        logIn = false;
+                    default:
+                        break;
                 }
-                //This would be our escape sequence
-                else if (option == 5) 
-                {
-                    logIn = false;
-                }
-            } 
-            else 
-            {
+            } else {
                 printMenuLogged(User);
                 option = input.nextInt();
-                if (option == 1) 
-                {
-                    System.out.println("No");
-                } 
-                else if (option == 2) 
-                {
+                switch (option) {
+                    case 1:
+                        System.out.println("No");
+                        break;
+
+                    case 2:
+                        menuEvent();
+                        option = input.nextInt();
+                        if (option == 1) {
+                            newEvent(eventListID, classes);
+                            eventListID++;
+                        } else if (option == 4) {
+                            for (int i = 0; i < classes.size(); i++) {
+                                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+                            }
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Donation menu here");
+                        break;
+                    case 4:
+                        System.out.println("FAQs! PHONE NUMBERS/EMAILS");
+                        break;
+                    case 5:
+                        for (int i = 0; i < classes.size(); i++) {
+                            System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+                        }
+                        break;
+                    case 6:
+                        User = "null";
+                        break;
 
                 }
-
-             
             }
-          }
-        while (!logIn);
-        
+        } while (logIn);
+
     }
+
     //method for printing a logged in user menu
     public static void printMenuLogged(String user) {
         System.out.println("Welcome, " + user + ". Please select an option.");
@@ -102,26 +105,27 @@ public class AlumniApp {
         System.out.println("5. Events");
         System.out.println("6. Exit");
     }
+
     //method for printing a new user menu
     public static void printMenuNew() {
         System.out.println("Welcome, please register to continue!");
         System.out.println("*************************");
         System.out.println("1. Register");
-        System.out.println("2. Donate");
+        System.out.println("2. Login?");
         System.out.println("3. FAQ/contact us!");
-        System.out.println("4. Events");
-        System.out.println("5. Exit");
+        System.out.println("4. Exit");
     }
+
     //method for printing event menu
     public static void menuEvent() {
-        
+
         System.out.println("Select an option: ");
         System.out.println("1. Create a new event");
         System.out.println("2. Attend an event as a guest");
         System.out.println("3. Attend an event as a speaker");
         System.out.println("4. View events");
     }
-    
+
     //method for creating a new event
     public static void newEvent(int eventListID, ArrayList classes) {
         int id = eventListID;
@@ -154,23 +158,23 @@ public class AlumniApp {
         Scanner input = new Scanner(System.in);
         Alumni register = new Alumni();
         System.out.println("Welcome graduate! Please supply the following information: ");
-        System.out.print("Name: ");
-        register.setName(input.next());
+        System.out.print("First name: ");
+        register.setFirstName(input.nextLine());
+        System.out.print("Last name: ");
+        register.setLastName(input.nextLine());
         System.out.print("Address: ");
-        register.setAddress(input.next());
+        register.setAddress(input.nextLine());
         System.out.print("Major: ");
-        register.setMajor(input.next());
+        register.setMajor(input.nextLine());
         System.out.print("Graduation Year: ");
-        register.setGrad(input.next());
+        register.setGrad(input.nextLine());
         System.out.print("Occupation: ");
-        register.setJob(input.next());
+        register.setJob(input.nextLine());
         System.out.print("Organization: ");
-        register.setOrg(input.next());
+        register.setOrg(input.nextLine());
         students.add(id, register);
-        User = register.getName();
+        User = register.getFirstName();
         return User;
     }
-    
-    
 
 }

@@ -16,7 +16,8 @@ import java.util.Scanner;
 
 
 public class Alumni {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String address;
     private String major;
     private String gradYear;
@@ -29,8 +30,9 @@ public class Alumni {
         
     }
     //overloaded construct with variables
-    public Alumni(String name, String address, String major, String gradYear, String occupation, String organization) {
-        this.name = name;
+    public Alumni(String firstName, String lastName, String address, String major, String gradYear, String occupation, String organization) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
         this.major = major;
         this.gradYear = gradYear;
@@ -43,12 +45,20 @@ public class Alumni {
      * Getters and setters for alumni name 
      * @return their name
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+    
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
     /***
      * 
      * Getters and setters for alumni address 
