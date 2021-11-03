@@ -27,7 +27,7 @@ public class AlumniApp {
         String User = "null";
         //Session
         boolean logIn = true;
-        int option;
+        int option = 0;
         /**
          * Run through the menu first, as loggedIn is FALSE If User is null, it
          * will ask you to register Otherwise you're presented with a full menu
@@ -36,7 +36,7 @@ public class AlumniApp {
             if ("null".equals(User)) {
                 printMenuNew(); //Print the menu for a new user which asks them to register, but they can select other things
                 System.out.println("Please select an option!");
-                option = input.nextInt();
+                option = getInt(4);
                 //If option is (1), it pulls the newAlumni method so that they can register as an alumni
                 switch (option) {
                     /*else if (option == 2){
@@ -55,39 +55,29 @@ public class AlumniApp {
                 }
             } else {
                 printMenuLogged(User);
-                option = input.nextInt();
+                option = getInt(9);
                 switch (option) {
                     case 1:
                         System.out.println("No");
                         break;
-
                     case 2:
-                        menuEvent();
-                        option = input.nextInt();
-                        if (option == 1) {
-                            newEvent(eventListID, classes);
-                            eventListID++;
-                        } else if (option == 4) {
-                            for (int i = 0; i < classes.size(); i++) {
-                                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
-                            }
-                        }
+                        newEvent(eventListID, classes);
+                        eventListID++;
                         break;
                     case 3:
+                        attendEventGuest(classes);
+                        break;
+                    case 6:
                         System.out.println("Donation menu here");
                         break;
-                    case 4:
+                    case 7:
                         System.out.println("FAQs! PHONE NUMBERS/EMAILS");
                         break;
-                    case 5:
+                    case 8:
                         for (int i = 0; i < classes.size(); i++) {
                             System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                         }
                         break;
-                    case 6:
-                        User = "null";
-                        break;
-
                 }
             }
         } while (logIn);
@@ -100,10 +90,13 @@ public class AlumniApp {
         System.out.println("*************************");
         System.out.println("1. Print Name Tag");
         System.out.println("2. Register an Event");
-        System.out.println("3. Donate and Raffle");
-        System.out.println("4. FAQ/contact us!");
-        System.out.println("5. Events");
-        System.out.println("6. Exit");
+        System.out.println("3. Attend an event as a guest");
+        System.out.println("4. Attend an event as a speaker");
+        System.out.println("5. View events");
+        System.out.println("6. Donate and Raffle");
+        System.out.println("7. FAQ/contact us!");
+        System.out.println("8. Events");
+        System.out.println("9. Exit");
     }
 
     //method for printing a new user menu
@@ -121,9 +114,33 @@ public class AlumniApp {
 
         System.out.println("Select an option: ");
         System.out.println("1. Create a new event");
-        System.out.println("2. Attend an event as a guest");
-        System.out.println("3. Attend an event as a speaker");
-        System.out.println("4. View events");
+    }
+    
+    public static void attendEventGuest(ArrayList<Training> classes) {
+        Training temp;
+        int selection = 0;
+        while (true) {
+            System.out.println("*************************");
+            System.out.println("Select event index: ");
+            for (int i = 0; i < classes.size(); i++) {
+                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+            }
+            selection = getInt();
+            try {
+                temp = classes.get(selection - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid index!");
+                continue;
+            }
+            break;
+        }
+        if(temp.getSeats() > 0){
+            temp.setSeats(temp.getSeats() - 1);
+            System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
+        }
+        else{
+            System.out.println("No seats remaining for this event!");
+        }
     }
 
     //method for creating a new event
@@ -138,8 +155,7 @@ public class AlumniApp {
         System.out.println("Who will be presenting the event?");
         event.setPresenter(input.next());
         System.out.println("How many seats are available?");
-        event.setSeats(input.nextInt());
-        //PUT WAY TO CAPTURE SEATS HERE/CHANGE SEATS
+        event.setSeats(getInt());
         System.out.println("What date will this event take place?");
         event.setDate(input.next());
         System.out.println("What time will it start?");
@@ -177,4 +193,35 @@ public class AlumniApp {
         return User;
     }
 
+    public static int getInt() {
+        int option = 0;
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            try {
+                option = Integer.parseInt(input.next());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            return option;
+        }
+    }
+
+    public static int getInt(int max) {
+        int option = 0;
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            try {
+                option = Integer.parseInt(input.next());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            if (option >= 1 && option <= max) {
+                return option;
+            } else {
+                System.out.println("ERROR! The selected index is invalid!");
+            }
+        }
+    }
 }
