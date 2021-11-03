@@ -6,7 +6,9 @@ public class Donations {
     private String donator;
     private double donationIndiv;
     private double donationTotal;
-    private double donationGoal;
+    private double donationGoal = 250000;
+    private double maxDonation;
+    private String maxDonor;
     
 /***
  * Default constructor for Donations
@@ -23,11 +25,11 @@ public class Donations {
  * @param donationGoal the goal to meet in donations
  */    
     
-    public Donations(String donator, double donationIndiv, double donationTotal, double donationGoal) {
+    public Donations(String donator) {
         this.donator = donator;
-        this.donationIndiv = donationIndiv;
-        this.donationTotal = donationTotal;
-        this.donationGoal = donationGoal;
+        this.donationIndiv = 0;
+        this.donationTotal = 0;
+        this.maxDonation = 0;
     }
     
    /***
@@ -52,8 +54,13 @@ public class Donations {
     public double getDonationIndiv(){
         return donationIndiv;
     }
-    public void setDonationIndiv(double donation){
+    public void setDonationIndiv(double donation, String user){
         this.donationIndiv = donation;
+        this.donationTotal += donation;
+        if(donation > maxDonation) {
+            maxDonation = donation;
+            maxDonor = user;
+        }
         
     }
     /***
@@ -62,10 +69,6 @@ public class Donations {
      */
     public double getDonationTotal(){
         return donationTotal;
-    }
-    public void setDonationTotal(double donation){
-        this.donationTotal = donation;
-        
     }
     /***
      * Set the donation goal and
@@ -78,5 +81,15 @@ public class Donations {
         this.donationGoal = donation;
         
     }
+
+    public double getMaxDonation() {
+        return maxDonation;
+    }
+
+    public String getMaxDonor() {
+        return maxDonor;
+    }
+    
+    
     
 }

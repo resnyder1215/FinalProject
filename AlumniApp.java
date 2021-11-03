@@ -15,6 +15,7 @@ public class AlumniApp {
         int studentListID = 0;
         //used to set the index for events
         int eventListID = 0;
+        Donations alumni = new Donations();
         Scanner input = new Scanner(System.in);
         //ArrayLists can store objects and don't have a set size!
         //This one is for the student OBJECTS
@@ -68,7 +69,15 @@ public class AlumniApp {
                         attendEventGuest(classes);
                         break;
                     case 6:
-                        System.out.println("Donation menu here");
+                        menuDonation(alumni);
+                        option = getInt(2);
+                        switch (option) {
+                            case 1:
+                                makeDonation(alumni, User);
+                                break;
+                            case 2:
+                                break;
+                        }
                         break;
                     case 7:
                         System.out.println("FAQs! PHONE NUMBERS/EMAILS");
@@ -114,6 +123,25 @@ public class AlumniApp {
 
         System.out.println("Select an option: ");
         System.out.println("1. Create a new event");
+    }
+    
+    //method for printing donation menu
+    public static void menuDonation(Donations alumni) {
+        System.out.println("This is our donations page!");
+        System.out.println("*************************");
+        System.out.printf("Current donations goal: %.2f\n", alumni.getDonationGoal());
+        System.out.println("1. Make a donation");
+        System.out.println("2. Exit");
+    }
+    
+    //method for making donation
+    public static void makeDonation(Donations alumni, String user) {
+        double donation; 
+        Scanner input = new Scanner(System.in);
+        System.out.println("What would you like to donate?");
+        donation = Double.parseDouble(input.next());
+        alumni.setDonationIndiv(donation, user);
+        System.out.printf("Current TOP Donator: %s with $%.2f\n", alumni.getMaxDonor(), alumni.getMaxDonation());
     }
     
     public static void attendEventGuest(ArrayList<Training> classes) {
