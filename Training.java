@@ -64,6 +64,13 @@ package association;
         this.seats = seats;
     }
     
+    public void reserveSeat(){
+        if(seats > 0)
+            seats--;
+        else
+            System.out.println("No seats available!");
+    }
+    
     /***
      * 
      * Getters and setters for training date

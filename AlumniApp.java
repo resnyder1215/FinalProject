@@ -157,18 +157,13 @@ public class AlumniApp {
             try {
                 temp = classes.get(selection - 1);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid index!");
+                System.out.println("Invalid event index!");
                 continue;
             }
             break;
         }
-        if(temp.getSeats() > 0){
-            temp.setSeats(temp.getSeats() - 1);
-            System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
-        }
-        else{
-            System.out.println("No seats remaining for this event!");
-        }
+        temp.reserveSeat();
+        System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
     }
 
     //method for creating a new event
