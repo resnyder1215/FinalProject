@@ -37,7 +37,7 @@ public class AlumniApp {
             if ("null".equals(User)) {
                 printMenuNew(); //Print the menu for a new user which asks them to register, but they can select other things
                 System.out.println("Please select an option!");
-                option = getInt(4);
+                option = getInt(1, 4);
                 //If option is (1), it pulls the newAlumni method so that they can register as an alumni
                 switch (option) {
                     /*else if (option == 2){
@@ -56,7 +56,7 @@ public class AlumniApp {
                 }
             } else {
                 printMenuLogged(User);
-                option = getInt(9);
+                option = getInt(1, 9);
                 switch (option) {
                     case 1:
                         System.out.println("No");
@@ -68,9 +68,12 @@ public class AlumniApp {
                     case 3:
                         attendEventGuest(classes);
                         break;
+                    case 4:
+                        attendEventSpeaker(classes);
+                        break;
                     case 6:
                         menuDonation(alumni);
-                        option = getInt(2);
+                        option = getInt(1, 2);
                         switch (option) {
                             case 1:
                                 makeDonation(alumni, User);
@@ -144,6 +147,7 @@ public class AlumniApp {
         System.out.printf("Current TOP Donator: %s with $%.2f\n", alumni.getMaxDonor(), alumni.getMaxDonation());
     }
     
+    //method for attending event as a guest
     public static void attendEventGuest(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
@@ -166,6 +170,35 @@ public class AlumniApp {
         System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
     }
 
+    public static void attendEventSpeaker(ArrayList<Training> classes){
+        Training temp;
+        int selection = 0;
+        Scanner input = new Scanner(System.in);
+        while(true){
+            System.out.println("*************************");
+            System.out.println("Select event index: ");
+            for (int i = 0; i < classes.size(); i++) {
+                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+            }
+            selection = getInt();
+            try {
+                temp = classes.get(selection - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid event index!");
+                continue;
+            }
+            break;
+        }
+        if(temp.getPresenterLength() < 3){
+            System.out.println("What is the name of the speaker?");
+            temp.addPresenter(input.nextLine());
+            System.out.println(temp.toString());
+        }
+        else{
+            System.out.println("There are already 3 speakers at the event!");
+        }
+    }
+    
     //method for creating a new event
     public static void newEvent(int eventListID, ArrayList classes) {
         int id = eventListID;
@@ -174,19 +207,19 @@ public class AlumniApp {
         System.out.println("This is the event creation menu.");
         System.out.println("Please fill out the following information: ");
         System.out.print("What is the training/event?");
-        event.setCourse(input.next());
+        event.setCourse(input.nextLine());
         System.out.println("Who will be presenting the event?");
-        event.setPresenter(input.next());
+        event.addPresenter(input.nextLine());
         System.out.println("How many seats are available?");
         event.setSeats(getInt());
         System.out.println("What date will this event take place?");
-        event.setDate(input.next());
+        event.setDate(input.nextLine());
         System.out.println("What time will it start?");
-        event.setTime(input.next());
+        event.setTime(input.nextLine());
         System.out.println("How long will it last?");
-        event.setDuration(input.next());
+        event.setDuration(input.nextLine());
         System.out.println("What room will the event take place in?");
-        event.setRoom(input.next());
+        event.setRoom(input.nextLine());
         classes.add(id, event);
     }
 
@@ -215,7 +248,8 @@ public class AlumniApp {
         User = register.getFirstName();
         return User;
     }
-
+    
+    //method for testing if the user has entered an integer (with no maximum value)
     public static int getInt() {
         int option = 0;
         Scanner input = new Scanner(System.in);
@@ -230,6 +264,7 @@ public class AlumniApp {
         }
     }
 
+    //method for testing if the user has entered an integer (with a maximum value)
     public static int getInt(int max) {
         int option = 0;
         Scanner input = new Scanner(System.in);
@@ -240,7 +275,26 @@ public class AlumniApp {
                 System.out.println("ERROR! Please enter a valid integer!");
                 continue;
             }
-            if (option >= 1 && option <= max) {
+            if (option <= max) {
+                return option;
+            } else {
+                System.out.println("ERROR! The selected index is invalid!");
+            }
+        }
+    }
+
+    //method for testing if the user has entered an integer (with a maximum and minimum value)
+    public static int getInt(int min, int max) {
+        int option = 0;
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            try {
+                option = Integer.parseInt(input.next());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            if (option >= min && option <= max) {
                 return option;
             } else {
                 System.out.println("ERROR! The selected index is invalid!");

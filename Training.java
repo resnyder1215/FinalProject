@@ -1,10 +1,12 @@
 
 package association;
 
+import java.util.ArrayList;
+
 //The training should include course name, presenter name, available of seats, date, time, duration, and room
     public class Training {
     private String course;
-    private String presenter;
+    private ArrayList<String> presenter;
     private int seats;
     private String date;
     private String time;
@@ -13,12 +15,13 @@ package association;
     
     
     public Training(){
-        
+        this.presenter = new ArrayList<>();
     }
     
     public Training(String course, String presenter, int seats, String date, String time, String duration, String room){
         this.course = course;
-        this.presenter = presenter;
+        this.presenter = new ArrayList<>();
+        this.presenter.add(presenter);
         this.seats = seats;
         this.date = date;
         this.time = time;
@@ -42,12 +45,16 @@ package association;
      * Getters and setters for training presenter 
      * @return the presenter name
      */
-    public String getPresenter() {
-        return presenter;
+    public String getPresenter(int index) {
+        return presenter.get(index);
     }
     
-    public void setPresenter(String presenter) {
-        this.presenter = presenter;
+    public void addPresenter(String presenter) {
+        this.presenter.add(presenter);
+    }
+    
+    public int getPresenterLength(){
+        return this.presenter.size();
     }
     
     /***
@@ -64,6 +71,7 @@ package association;
         this.seats = seats;
     }
     
+    //method to reserve a seat
     public void reserveSeat(){
         if(seats > 0)
             seats--;
@@ -131,13 +139,20 @@ package association;
     
    @Override
    public String toString() {
-        return ("Event name: " + this.getCourse()+ " |" +
-                " Presenter: "  + this.getPresenter() + " |" +
-                " Seats: "      + this.getSeats() + " |" +
+       String ret = "Event name: " + this.getCourse()+ " |" +
+                " Presenters: ";
+       for(int i = 0; i < presenter.size(); i++){
+           ret += presenter.get(i);
+           if(i != presenter.size() - 1)
+               ret += ", ";
+       }
+       
+       ret += " |" + " Seats: "      + this.getSeats() + " |" +
                 " Date: "       + this.getDate() + " |" +
                 " Time: "       + this.getTime() + " |" +
                 " Duration: "   + this.getDuration()  + " |" +
-                " Room: "       + this.getRoom());
-        
+                " Room: "       + this.getRoom();
+       
+       return ret;
    }
 }
