@@ -8,9 +8,9 @@ import java.util.ArrayList;
     private String course;
     private ArrayList<String> presenter;
     private int seats;
-    private String date;
-    private String time;
-    private String duration;
+    private Date date;
+    private Time time;
+    private Time duration;
     private String room;
     
     
@@ -18,7 +18,7 @@ import java.util.ArrayList;
         this.presenter = new ArrayList<>();
     }
     
-    public Training(String course, String presenter, int seats, String date, String time, String duration, String room){
+    public Training(String course, String presenter, int seats, Date date, Time time, Time duration, String room){
         this.course = course;
         this.presenter = new ArrayList<>();
         this.presenter.add(presenter);
@@ -84,11 +84,11 @@ import java.util.ArrayList;
      * Getters and setters for training date
      * @return the training date
      */
-     public String getDate() {
+     public Date getDate() {
         return date;
     }
     
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     
@@ -99,11 +99,11 @@ import java.util.ArrayList;
      * @return the training time
      */
    
-    public String getTime() {
+    public Time getTime() {
         return time;
     }
     
-    public void setTime(String time) {
+    public void setTime(Time time) {
         this.time = time;
     }
     
@@ -113,11 +113,11 @@ import java.util.ArrayList;
      * @return duration
      */
     
-    public String getDuration() {
+    public Time getDuration() {
         return duration;
     }
     
-    public void setDuration(String duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
     
@@ -148,9 +148,9 @@ import java.util.ArrayList;
        }
        
        ret += " |" + " Seats: "      + this.getSeats() + " |" +
-                " Date: "       + this.getDate() + " |" +
-                " Time: "       + this.getTime() + " |" +
-                " Duration: "   + this.getDuration()  + " |" +
+                " Date: "       + this.getDate().toString() + " |" +
+                " Time: "       + this.getTime().toString() + " |" +
+                " Duration: "   + this.getDuration().toString()  + " |" +
                 " Room: "       + this.getRoom();
        
        return ret;

@@ -7,7 +7,6 @@ package association;
 
 import java.util.Scanner;
 import java.util.ArrayList;
-
 public class AlumniApp {
 
     public static void main(String[] args) {
@@ -206,18 +205,18 @@ public class AlumniApp {
         Training event = new Training();
         System.out.println("This is the event creation menu.");
         System.out.println("Please fill out the following information: ");
-        System.out.print("What is the training/event?");
+        System.out.println("What is the training/event?");
         event.setCourse(input.nextLine());
         System.out.println("Who will be presenting the event?");
         event.addPresenter(input.nextLine());
         System.out.println("How many seats are available?");
         event.setSeats(getInt());
         System.out.println("What date will this event take place?");
-        event.setDate(input.nextLine());
-        System.out.println("What time will it start?");
-        event.setTime(input.nextLine());
-        System.out.println("How long will it last?");
-        event.setDuration(input.nextLine());
+        event.setDate(Date.inputDate(input));
+        System.out.println("What time will it start? (HH:MM:SS)");
+        event.setTime(Time.inputTime(input));
+        System.out.println("How long will it last? (HH:MM:SS)");
+        event.setDuration(Time.inputTime(input));
         System.out.println("What room will the event take place in?");
         event.setRoom(input.nextLine());
         classes.add(id, event);
