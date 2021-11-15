@@ -1,95 +1,100 @@
 
 package association;
 
+import java.util.ArrayList;
+
 //This will be for collecting donations and funding events.
 public class Donations {
     private String donator;
-    private double donationIndiv;
-    private double donationTotal;
+    private double donations;
     private double donationGoal = 250000;
-    private double maxDonation;
-    private String maxDonor;
+    private ArrayList<String[]> maxDonations;
+    //For indexing the String arrays in maxDonations
+    private final int DONOR = 0;
+    private final int DONATION = 1;
     
 /***
  * Default constructor for Donations
  */
     public Donations(){
-        
+        this.maxDonations = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            this.maxDonations.add(new String[2]);
+        }
+        for(String[] arr : maxDonations){
+            arr[DONOR] = "Empty";
+            arr[DONATION] = "0";
+        }
     }
     
-/***
- * Overloaded constructor for Donations
- * @param donator the person making the donation
- * @param donationIndiv the amount donated by an individual
- * @param donationTotal the amount total donated by all parties
- * @param donationGoal the goal to meet in donations
- */    
-    
-    public Donations(String donator) {
+    public Donations(String donator){
         this.donator = donator;
-        this.donationIndiv = 0;
-        this.donationTotal = 0;
-        this.maxDonation = 0;
+        this.donations = 0;
+        this.maxDonations = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            this.maxDonations.add(new String[2]);
+        }
+        for(String[] arr : maxDonations){
+            arr = new String[2];
+            arr[DONOR] = "Empty";
+            arr[DONATION] = "0";
+        }
     }
-    
-   /***
-     * Getters and setters for a donator
-     * @return the name of a donator
-     */
-    
-    public String getDonator(){
+
+    public String getDonator() {
         return donator;
     }
-    public void setDonator(String donator){
-        this.donator = donator;
-        
+
+    public double getDonations() {
+        return donations;
     }
-    
-    
-    /***
-     * Getters and setters for individual donations
-     * @return the individual donation
-     */
-    
-    public double getDonationIndiv(){
-        return donationIndiv;
-    }
-    public void setDonationIndiv(double donation, String user){
-        this.donationIndiv = donation;
-        this.donationTotal += donation;
-        if(donation > maxDonation) {
-            maxDonation = donation;
-            maxDonor = user;
-        }
-        
-    }
-    /***
-     * The method for returning and setting the total amount of donations given.
-     * @return the total donations 
-     */
-    public double getDonationTotal(){
-        return donationTotal;
-    }
-    /***
-     * Set the donation goal and
-     * @return the donation goal for an event  
-     */
-    public double getDonationGoal(){
+
+    public double getDonationGoal() {
         return donationGoal;
     }
-    public void setDonationGoal(double donation){
-        this.donationGoal = donation;
-        
-    }
-
-    public double getMaxDonation() {
-        return maxDonation;
-    }
-
-    public String getMaxDonor() {
-        return maxDonor;
+    
+    public double getMaxDonation(int index) {
+        return Double.parseDouble(maxDonations.get(index)[1]);
     }
     
+    public String getMaxDonor(int index){
+        return maxDonations.get(index)[DONOR];
+    }
     
+    public void setMaxDonation(int index, double amount){
+        this.maxDonations.get(index)[DONATION] = String.format("%.2f", amount);
+    }
     
+    public void setMaxDonation(int index, String amount){
+        this.maxDonations.get(index)[DONATION] = amount;
+    }
+    
+    public void setMaxDonor(int index, String user){
+        this.maxDonations.get(index)[DONOR] = user;
+    }
+    
+    public void donate(String user, double amount){
+        if(amount < 0.00)
+            System.out.println("ERROR! Cannot donate a negative amount!");
+        else if(amount == 0.00)
+            System.out.println("ERROR! Cannot donate $0.00!");
+        else{
+            this.donations += amount;
+            if(amount > getMaxDonation(0) && amount > getMaxDonation(1) && amount > getMaxDonation(2)){
+                this.maxDonations.set(2, this.maxDonations.get(1).clone());
+                this.maxDonations.set(1, this.maxDonations.get(0).clone());
+                setMaxDonor(0, user);
+                setMaxDonation(0, amount);
+            }
+            else if(amount > getMaxDonation(1) && amount > getMaxDonation(2)){
+                this.maxDonations.set(2, this.maxDonations.get(1).clone());
+                setMaxDonor(1, user);
+                setMaxDonation(1, amount);
+            }
+            else if(amount > getMaxDonation(2)){
+                setMaxDonor(2, user);
+                setMaxDonation(2, amount);
+            }
+        }
+    }
 }

@@ -55,7 +55,7 @@ public class AlumniApp {
                 }
             } else {
                 printMenuLogged(User);
-                option = getInt(1, 9);
+                option = getInt(1, 8);
                 switch (option) {
                     case 1:
                         System.out.println("No");
@@ -70,7 +70,7 @@ public class AlumniApp {
                     case 4:
                         attendEventSpeaker(classes);
                         break;
-                    case 6:
+                    case 5:
                         menuDonation(alumni);
                         option = getInt(1, 2);
                         switch (option) {
@@ -81,10 +81,10 @@ public class AlumniApp {
                                 break;
                         }
                         break;
-                    case 7:
+                    case 6:
                         System.out.println("FAQs! PHONE NUMBERS/EMAILS");
                         break;
-                    case 8:
+                    case 7:
                         for (int i = 0; i < classes.size(); i++) {
                             System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                         }
@@ -103,11 +103,10 @@ public class AlumniApp {
         System.out.println("2. Register an Event");
         System.out.println("3. Attend an event as a guest");
         System.out.println("4. Attend an event as a speaker");
-        System.out.println("5. View events");
-        System.out.println("6. Donate and Raffle");
-        System.out.println("7. FAQ/contact us!");
-        System.out.println("8. Events");
-        System.out.println("9. Exit");
+        System.out.println("5. Donate and Raffle");
+        System.out.println("6. FAQ/contact us!");
+        System.out.println("7. Events");
+        System.out.println("8. Exit");
     }
 
     //method for printing a new user menu
@@ -131,19 +130,20 @@ public class AlumniApp {
     public static void menuDonation(Donations alumni) {
         System.out.println("This is our donations page!");
         System.out.println("*************************");
-        System.out.printf("Current donations goal: %.2f\n", alumni.getDonationGoal());
+        System.out.printf("Current donations goal: $%.2f\n", alumni.getDonationGoal());
+        System.out.printf("Current amount donated: $%.2f\n", alumni.getDonations());
         System.out.println("1. Make a donation");
         System.out.println("2. Exit");
     }
     
     //method for making donation
     public static void makeDonation(Donations alumni, String user) {
-        double donation; 
-        Scanner input = new Scanner(System.in);
+        double donation;
         System.out.println("What would you like to donate?");
-        donation = Double.parseDouble(input.next());
-        alumni.setDonationIndiv(donation, user);
-        System.out.printf("Current TOP Donator: %s with $%.2f\n", alumni.getMaxDonor(), alumni.getMaxDonation());
+        donation = getDollarAmount(0.01);
+        alumni.donate(user, donation);
+        System.out.println("Current TOP Donators: ");
+        System.out.printf("\t1. %-50s %.2f\n\t2. %-50s %.2f\n\t3. %-50s %.2f\n", alumni.getMaxDonor(0) + ':', alumni.getMaxDonation(0), alumni.getMaxDonor(1) + ':', alumni.getMaxDonation(1), alumni.getMaxDonor(2) + ':', alumni.getMaxDonation(2));
     }
     
     //method for attending event as a guest
@@ -277,7 +277,7 @@ public class AlumniApp {
             if (option <= max) {
                 return option;
             } else {
-                System.out.println("ERROR! The selected index is invalid!");
+                System.out.println("ERROR! The selected number is invalid! Please enter a value up to " + max + ".");
             }
         }
     }
@@ -296,8 +296,25 @@ public class AlumniApp {
             if (option >= min && option <= max) {
                 return option;
             } else {
-                System.out.println("ERROR! The selected index is invalid!");
+                System.out.println("ERROR! The selected number is invalid! Please enter a value between " + min + " and " + max + ".");
             }
+        }
+    }
+    
+    public static double getDollarAmount(double min){
+        double option = 0;
+        Scanner input = new Scanner(System.in);
+        while(true){
+            try{
+                option = Double.parseDouble(String.format("%.2f", Double.parseDouble(input.nextLine())));
+            } catch(NumberFormatException e){
+                System.out.println("ERROR! Please enter a valid decimal number.");
+                continue;
+            }
+            if(option >= min)
+                return option;
+            else
+                System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + String.format("%.2f", min));
         }
     }
 }
