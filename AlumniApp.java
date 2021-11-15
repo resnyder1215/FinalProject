@@ -252,14 +252,13 @@ public class AlumniApp {
     public static int getInt() {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while (true) {
-            try {
-                option = Integer.parseInt(input.next());
-            } catch (NumberFormatException e) {
+        while(true){
+            if(input.hasNextInt())
+                return input.nextInt();
+            else{
+                String temp = input.nextLine();
                 System.out.println("ERROR! Please enter a valid integer!");
-                continue;
             }
-            return option;
         }
     }
 
@@ -267,16 +266,16 @@ public class AlumniApp {
     public static int getInt(int max) {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while (true) {
-            try {
-                option = Integer.parseInt(input.next());
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR! Please enter a valid integer!");
-                continue;
+        while(true){
+            if(input.hasNextInt()){
+                option = input.nextInt();
+                if(option <= max)
+                    return option;
+                else
+                    System.out.println("ERROR! The selected number is invalud! Please enter a value of at most " + max +".");
             }
-            if (option <= max) {
-                return option;
-            } else {
+            else{
+                String temp = input.nextLine();
                 System.out.println("ERROR! The selected number is invalid! Please enter a value up to " + max + ".");
             }
         }
@@ -286,35 +285,34 @@ public class AlumniApp {
     public static int getInt(int min, int max) {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while (true) {
-            try {
-                option = Integer.parseInt(input.next());
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR! Please enter a valid integer!");
-                continue;
+        while(true){
+            if(input.hasNextInt()){
+                option = input.nextInt();
+                if(option >= min && option <= max)
+                    return option;
+                else
+                    System.out.println("ERROR! The selected number is invalud! Please enter a value from " + min + " to " + max +".");
             }
-            if (option >= min && option <= max) {
-                return option;
-            } else {
-                System.out.println("ERROR! The selected number is invalid! Please enter a value between " + min + " and " + max + ".");
+            else{
+                String temp = input.nextLine();
+                System.out.println("ERROR! Please enter a valid integer!");
             }
         }
     }
     
     public static double getDollarAmount(double min){
         double option = 0;
-        Scanner input = new Scanner(System.in);
+         Scanner input = new Scanner(System.in);
         while(true){
-            try{
-                option = Double.parseDouble(String.format("%.2f", Double.parseDouble(input.nextLine())));
-            } catch(NumberFormatException e){
-                System.out.println("ERROR! Please enter a valid decimal number.");
-                continue;
+            if(input.hasNextDouble()){
+                option = input.nextDouble();
+                if(option >= min)
+                    return option;
             }
-            if(option >= min)
-                return option;
-            else
-                System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + String.format("%.2f", min));
+            else{
+                String temp = input.nextLine();
+                System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + min + ".");
+            }
         }
     }
 }
