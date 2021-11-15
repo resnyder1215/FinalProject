@@ -5,6 +5,7 @@
  */
 package association;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
 public class AlumniApp {
@@ -36,19 +37,23 @@ public class AlumniApp {
             if ("null".equals(User)) {
                 printMenuNew(); //Print the menu for a new user which asks them to register, but they can select other things
                 System.out.println("Please select an option!");
-                option = getInt(1, 4);
+                option = getInt(1, 3);
                 //If option is (1), it pulls the newAlumni method so that they can register as an alumni
                 switch (option) {
-                    /*else if (option == 2){
-                }*/
-                    //Other others will go here, testing creating/viewing events currently
+                    
                     case 1:
                         User = newAlumni(studentListID, students);
                         System.out.println(User);
                         studentListID++;
                         break;
-                    //This would be our escape sequence
-                    case 4:
+                        
+                    case 2: 
+                        System.out.println("FAQs!");
+                        System.out.println("Where does my money go?");
+                        System.out.println("Answer: I DONT KNOW");
+                        break;
+                        
+                    case 3:
                         logIn = false;
                     default:
                         break;
@@ -58,7 +63,7 @@ public class AlumniApp {
                 option = getInt(1, 8);
                 switch (option) {
                     case 1:
-                        System.out.println("No");
+                        printNameTag(User);
                         break;
                     case 2:
                         newEvent(eventListID, classes);
@@ -103,7 +108,7 @@ public class AlumniApp {
         System.out.println("2. Register an Event");
         System.out.println("3. Attend an event as a guest");
         System.out.println("4. Attend an event as a speaker");
-        System.out.println("5. Donate and Raffle");
+        System.out.println("5. Donate");
         System.out.println("6. FAQ/contact us!");
         System.out.println("7. Events");
         System.out.println("8. Exit");
@@ -114,16 +119,8 @@ public class AlumniApp {
         System.out.println("Welcome, please register to continue!");
         System.out.println("*************************");
         System.out.println("1. Register");
-        System.out.println("2. Login?");
-        System.out.println("3. FAQ/contact us!");
-        System.out.println("4. Exit");
-    }
-
-    //method for printing event menu
-    public static void menuEvent() {
-
-        System.out.println("Select an option: ");
-        System.out.println("1. Create a new event");
+        System.out.println("2. FAQ/contact us!");
+        System.out.println("3. Exit");
     }
     
     //method for printing donation menu
@@ -211,7 +208,7 @@ public class AlumniApp {
         event.addPresenter(input.nextLine());
         System.out.println("How many seats are available?");
         event.setSeats(getInt());
-        System.out.println("What date will this event take place?");
+        System.out.println("What date will this event take place? (MM/DD/YYYY)");
         event.setDate(Date.inputDate(input));
         System.out.println("What time will it start? (HH:MM:SS)");
         event.setTime(Time.inputTime(input));
@@ -244,7 +241,7 @@ public class AlumniApp {
         System.out.print("Organization: ");
         register.setOrg(input.nextLine());
         students.add(id, register);
-        User = register.getFirstName();
+        User = register.getFirstName() + " " + register.getLastName();
         return User;
     }
     
@@ -314,5 +311,45 @@ public class AlumniApp {
                 System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + min + ".");
             }
         }
+    }
+    
+    
+    public static void printNameTag(String User){
+        System.out.println("__________________________________");
+        System.out.println("|                                 |");
+        System.out.println("|      HELLO, MY NAME IS          |");
+        System.out.println("          " + User + "              ");
+        System.out.println("|                                 |");
+        System.out.println("      " + getSuper() + "          " );
+        System.out.println("|_________________________________|");
+        System.out.println(" ");
+    }
+    
+    public static String getSuper(){
+        int option = 0;
+        String superlative = "Nothing";
+        Random rand = new Random();
+        option = rand.nextInt(6);
+        switch(option) { 
+            case 0:
+                superlative = "Most Likely to Be A Crab";
+                break;
+            case 1: 
+                superlative = "Least Likely to Own A Car";
+                break;
+            case 2:
+                superlative = "Most Likely to Be Arrested";
+                break;
+            case 3:
+                superlative = "Won't Try New Things";
+                break;
+            case 4:
+                superlative = "Has Never Been More Alive";
+                break;
+            case 5:
+                superlative = "Lost Their Diploma";
+                break;
+        }
+        return superlative;
     }
 }
