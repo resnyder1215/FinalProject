@@ -94,6 +94,9 @@ public class AlumniApp {
                             System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                         }
                         break;
+                    case 8:
+                        User = "null";
+                 
                 }
             }
         } while (logIn);
@@ -344,7 +347,7 @@ public class AlumniApp {
                 superlative = "Won't Try New Things";
                 break;
             case 4:
-                superlative = "Has Never Been More Alive";
+                superlative = "Never Been More Alive";
                 break;
             case 5:
                 superlative = "Lost Their Diploma";
