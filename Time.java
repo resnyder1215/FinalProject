@@ -101,7 +101,7 @@ public class Time {
         int seconds = 0;
         String time;
         //regex, looks for String in "HH:MM:SS" pattern
-        Pattern p = Pattern.compile("([0-9]{1,2}):([0-9]{2})(:[0-9]{2})?");
+        Pattern p = Pattern.compile("([0-9]{1,2}):([0-9]{2}):?([0-9]{2})?");
         while(true){
             time = input.nextLine();
             Matcher m = p.matcher(time);
@@ -111,9 +111,13 @@ public class Time {
                 hours = Integer.parseInt(m.group(1));
                 minutes = Integer.parseInt(m.group(2));
                 //if seconds were provided (optional)
-                if(m.groupCount() > 3)
+                try{
                     seconds = Integer.parseInt(m.group(3));
-                //validates that the time is valid
+                }
+                catch(NumberFormatException e){
+                     seconds = 0;
+                }
+                //ensures that the time is valid
                 if(hours < 0 || hours > 24 || minutes < 0 || minutes > 60 || seconds < 0 || seconds > 60){
                     System.out.println("ERROR! Invalid time format. Please type a real time.");
                     continue;
