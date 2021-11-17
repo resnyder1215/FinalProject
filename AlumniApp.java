@@ -162,51 +162,59 @@ public class AlumniApp {
     public static void attendEventGuest(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
-        while (true) {
-            System.out.println("*************************");
-            System.out.println("Select event index: ");
-            for (int i = 0; i < classes.size(); i++) {
-                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+        if (classes.size() > 0) {
+            while (true) {
+                System.out.println("*************************");
+                System.out.println("Select event index: ");
+                for (int i = 0; i < classes.size(); i++) {
+                    System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+                }
+                selection = getInt();
+                try {
+                    temp = classes.get(selection - 1);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Invalid event index!");
+                    continue;
+                }
+                break;
             }
-            selection = getInt();
-            try {
-                temp = classes.get(selection - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid event index!");
-                continue;
-            }
-            break;
+            temp.reserveSeat();
+            System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
+            System.out.println(" ");
+        } else {
+            System.out.println("No events to register for!");
         }
-        temp.reserveSeat();
-        System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
-        System.out.println(" ");
     }
 
     public static void attendEventSpeaker(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
-        Scanner input = new Scanner(System.in);
-        while (true) {
-            System.out.println("*************************");
-            System.out.println("Select event index: ");
-            for (int i = 0; i < classes.size(); i++) {
-                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+        if (classes.size() > 0) {
+            Scanner input = new Scanner(System.in);
+            while (true) {
+                System.out.println("*************************");
+                System.out.println("Select event index: ");
+                for (int i = 0; i < classes.size(); i++) {
+                    System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+                }
+                selection = getInt();
+                try {
+                    temp = classes.get(selection - 1);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Invalid event index!");
+                    continue;
+                }
+                break;
             }
-            selection = getInt();
-            try {
-                temp = classes.get(selection - 1);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid event index!");
-                continue;
+            if (temp.getPresenterLength() < 3) {
+                System.out.println("What is the name of the speaker?");
+                temp.addPresenter(input.nextLine());
+                System.out.println(temp.toString());
+            } else {
+                System.out.println("There are already 3 speakers at the event!");
             }
-            break;
-        }
-        if (temp.getPresenterLength() < 3) {
-            System.out.println("What is the name of the speaker?");
-            temp.addPresenter(input.nextLine());
-            System.out.println(temp.toString());
         } else {
-            System.out.println("There are already 3 speakers at the event!");
+            System.out.println("Sorry, no events to speak at!");
         }
         System.out.println(" ");
     }
