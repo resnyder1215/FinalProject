@@ -8,6 +8,7 @@ package association;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class AlumniApp {
 
     public static void main(String[] args) {
@@ -40,19 +41,18 @@ public class AlumniApp {
                 option = getInt(1, 3);
                 //If option is (1), it pulls the newAlumni method so that they can register as an alumni
                 switch (option) {
-                    
+
                     case 1:
                         User = newAlumni(studentListID, students);
-                        System.out.println(User);
                         studentListID++;
+                        System.out.println(" ");
                         break;
-                        
-                    case 2: 
-                        System.out.println("FAQs!");
-                        System.out.println("Where does my money go?");
-                        System.out.println("Answer: I DONT KNOW");
+
+                    case 2:
+                        printFAQ();
+                        System.out.println(" ");
                         break;
-                        
+
                     case 3:
                         logIn = false;
                     default:
@@ -64,16 +64,20 @@ public class AlumniApp {
                 switch (option) {
                     case 1:
                         printNameTag(User);
+                        System.out.println(" ");
                         break;
                     case 2:
                         newEvent(eventListID, classes);
                         eventListID++;
+                        System.out.println(" ");
                         break;
                     case 3:
                         attendEventGuest(classes);
+                        System.out.println(" ");
                         break;
                     case 4:
                         attendEventSpeaker(classes);
+                        System.out.println(" ");
                         break;
                     case 5:
                         menuDonation(alumni);
@@ -81,22 +85,26 @@ public class AlumniApp {
                         switch (option) {
                             case 1:
                                 makeDonation(alumni, User);
+                                System.out.println(" ");
                                 break;
                             case 2:
+                                System.out.println(" ");
                                 break;
                         }
                         break;
                     case 6:
-                        System.out.println("FAQs! PHONE NUMBERS/EMAILS");
+                        printFAQ();
+                        System.out.println(" ");
                         break;
                     case 7:
                         for (int i = 0; i < classes.size(); i++) {
                             System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                         }
+                        System.out.println(" ");
                         break;
                     case 8:
                         User = "null";
-                 
+
                 }
             }
         } while (logIn);
@@ -115,6 +123,7 @@ public class AlumniApp {
         System.out.println("6. FAQ/contact us!");
         System.out.println("7. Events");
         System.out.println("8. Exit");
+        System.out.println(" ");
     }
 
     //method for printing a new user menu
@@ -124,8 +133,9 @@ public class AlumniApp {
         System.out.println("1. Register");
         System.out.println("2. FAQ/contact us!");
         System.out.println("3. Exit");
+        System.out.println(" ");
     }
-    
+
     //method for printing donation menu
     public static void menuDonation(Donations alumni) {
         System.out.println("This is our donations page!");
@@ -134,8 +144,9 @@ public class AlumniApp {
         System.out.printf("Current amount donated: $%.2f\n", alumni.getDonations());
         System.out.println("1. Make a donation");
         System.out.println("2. Exit");
+        System.out.println(" ");
     }
-    
+
     //method for making donation
     public static void makeDonation(Donations alumni, String user) {
         double donation;
@@ -143,9 +154,10 @@ public class AlumniApp {
         donation = getDollarAmount(0.01);
         alumni.donate(user, donation);
         System.out.println("Current TOP Donators: ");
-        System.out.printf("\t1. %-50s %.2f\n\t2. %-50s %.2f\n\t3. %-50s %.2f\n", alumni.getMaxDonor(0) + ':', alumni.getMaxDonation(0), alumni.getMaxDonor(1) + ':', alumni.getMaxDonation(1), alumni.getMaxDonor(2) + ':', alumni.getMaxDonation(2));
+        System.out.printf("\t1. %-50s $%.2f\n\t2. %-50s $%.2f\n\t3. %-50s $%.2f\n", alumni.getMaxDonor(0) + ':', alumni.getMaxDonation(0), alumni.getMaxDonor(1) + ':', alumni.getMaxDonation(1), alumni.getMaxDonor(2) + ':', alumni.getMaxDonation(2));
+        System.out.println(" ");
     }
-    
+
     //method for attending event as a guest
     public static void attendEventGuest(ArrayList<Training> classes) {
         Training temp;
@@ -167,13 +179,14 @@ public class AlumniApp {
         }
         temp.reserveSeat();
         System.out.println("Remaining seats for " + temp.getCourse() + ": " + temp.getSeats());
+        System.out.println(" ");
     }
 
-    public static void attendEventSpeaker(ArrayList<Training> classes){
+    public static void attendEventSpeaker(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
         Scanner input = new Scanner(System.in);
-        while(true){
+        while (true) {
             System.out.println("*************************");
             System.out.println("Select event index: ");
             for (int i = 0; i < classes.size(); i++) {
@@ -188,16 +201,16 @@ public class AlumniApp {
             }
             break;
         }
-        if(temp.getPresenterLength() < 3){
+        if (temp.getPresenterLength() < 3) {
             System.out.println("What is the name of the speaker?");
             temp.addPresenter(input.nextLine());
             System.out.println(temp.toString());
-        }
-        else{
+        } else {
             System.out.println("There are already 3 speakers at the event!");
         }
+        System.out.println(" ");
     }
-    
+
     //method for creating a new event
     public static void newEvent(int eventListID, ArrayList classes) {
         int id = eventListID;
@@ -205,6 +218,7 @@ public class AlumniApp {
         Training event = new Training();
         System.out.println("This is the event creation menu.");
         System.out.println("Please fill out the following information: ");
+        System.out.println(" ");
         System.out.println("What is the training/event?");
         event.setCourse(input.nextLine());
         System.out.println("Who will be presenting the event?");
@@ -220,6 +234,7 @@ public class AlumniApp {
         System.out.println("What room will the event take place in?");
         event.setRoom(input.nextLine());
         classes.add(id, event);
+        System.out.println(" ");
     }
 
     //method for registering new alumni
@@ -245,17 +260,18 @@ public class AlumniApp {
         register.setOrg(input.nextLine());
         students.add(id, register);
         User = register.getFirstName() + " " + register.getLastName();
+        System.out.println(" ");
         return User;
     }
-    
+
     //method for testing if the user has entered an integer (with no maximum value)
     public static int getInt() {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while(true){
-            if(input.hasNextInt())
+        while (true) {
+            if (input.hasNextInt()) {
                 return input.nextInt();
-            else{
+            } else {
                 String temp = input.nextLine();
                 System.out.println("ERROR! Please enter a valid integer!");
             }
@@ -266,15 +282,15 @@ public class AlumniApp {
     public static int getInt(int max) {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while(true){
-            if(input.hasNextInt()){
+        while (true) {
+            if (input.hasNextInt()) {
                 option = input.nextInt();
-                if(option <= max)
+                if (option <= max) {
                     return option;
-                else
-                    System.out.println("ERROR! The selected number is invalud! Please enter a value of at most " + max +".");
-            }
-            else{
+                } else {
+                    System.out.println("ERROR! The selected number is invalud! Please enter a value of at most " + max + ".");
+                }
+            } else {
                 String temp = input.nextLine();
                 System.out.println("ERROR! The selected number is invalid! Please enter a value up to " + max + ".");
             }
@@ -285,60 +301,59 @@ public class AlumniApp {
     public static int getInt(int min, int max) {
         int option = 0;
         Scanner input = new Scanner(System.in);
-        while(true){
-            if(input.hasNextInt()){
+        while (true) {
+            if (input.hasNextInt()) {
                 option = input.nextInt();
-                if(option >= min && option <= max)
+                if (option >= min && option <= max) {
                     return option;
-                else
-                    System.out.println("ERROR! The selected number is invalud! Please enter a value from " + min + " to " + max +".");
-            }
-            else{
+                } else {
+                    System.out.println("ERROR! The selected number is invalud! Please enter a value from " + min + " to " + max + ".");
+                }
+            } else {
                 String temp = input.nextLine();
                 System.out.println("ERROR! Please enter a valid integer!");
             }
         }
     }
-    
-    public static double getDollarAmount(double min){
+
+    public static double getDollarAmount(double min) {
         double option = 0;
-         Scanner input = new Scanner(System.in);
-        while(true){
-            if(input.hasNextDouble()){
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            if (input.hasNextDouble()) {
                 option = input.nextDouble();
-                if(option >= min)
+                if (option >= min) {
                     return option;
-            }
-            else{
+                }
+            } else {
                 String temp = input.nextLine();
                 System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + min + ".");
             }
         }
     }
-    
-    
-    public static void printNameTag(String User){
+
+    public static void printNameTag(String User) {
         System.out.println("__________________________________");
         System.out.println("|                                 |");
         System.out.println("|      HELLO, MY NAME IS          |");
         System.out.println("          " + User + "              ");
         System.out.println("|                                 |");
-        System.out.println("      " + getSuper() + "          " );
+        System.out.println("       " + getSuper() + "          ");
         System.out.println("|_________________________________|");
         System.out.println(" ");
     }
-    
-    public static String getSuper(){
+
+    public static String getSuper() {
         int option = 0;
         String superlative = "Nothing";
         Random rand = new Random();
-        option = rand.nextInt(6);
-        switch(option) { 
+        option = rand.nextInt(8);
+        switch (option) {
             case 0:
                 superlative = "Most Likely to Be A Crab";
                 break;
-            case 1: 
-                superlative = "Least Likely to Own A Car";
+            case 1:
+                superlative = "Least Likely to Own A House";
                 break;
             case 2:
                 superlative = "Most Likely to Be Arrested";
@@ -352,7 +367,30 @@ public class AlumniApp {
             case 5:
                 superlative = "Lost Their Diploma";
                 break;
+            case 6:
+                superlative = "The Most Handsome";
+                break;
+            case 7:
+                superlative = "Last Person Standing";
+                break;
         }
         return superlative;
+    }
+
+    public static void printFAQ() {
+        System.out.println(" Frequently Asked Questions");
+        System.out.println("****************************");
+        System.out.println("Q. Where does my money go?");
+        System.out.println(" ");
+        System.out.println("A. All alumni donations go towards facilitating alumni events.");
+        System.out.println(" ");
+        System.out.println("Q. Do I have to be an alumni to donate?");
+        System.out.println(" ");
+        System.out.println("A. No, but this is meant to be used primarily by alumni. Feel free to give!");
+        System.out.println(" ");
+        System.out.println("Q. What is your quest?");
+        System.out.println(" ");
+        System.out.println("A. I SEEK THE GRAIL.");
+        System.out.println(" ");
     }
 }
