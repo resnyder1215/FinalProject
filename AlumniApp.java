@@ -90,6 +90,8 @@ public class AlumniApp {
                             case 2:
                                 System.out.println(" ");
                                 break;
+                            default:
+                                break;
                         }
                         break;
                     case 6:
@@ -104,6 +106,9 @@ public class AlumniApp {
                         break;
                     case 8:
                         User = "null";
+                        break;
+                    default:
+                        break;
 
                 }
             }
@@ -150,7 +155,7 @@ public class AlumniApp {
     //method for making donation
     public static void makeDonation(Donations alumni, String user) {
         double donation;
-        System.out.println("What would you like to donate?");
+        System.out.println("What would you like to donate (or type \"exit\" to exit):?");
         donation = getDollarAmount(0.01);
         alumni.donate(user, donation);
         System.out.println("Current TOP Donators: ");
@@ -165,11 +170,13 @@ public class AlumniApp {
         if (classes.size() > 0) {
             while (true) {
                 System.out.println("*************************");
-                System.out.println("Select event index: ");
+                System.out.println("Select event index (or \"exit\" to exit): ");
                 for (int i = 0; i < classes.size(); i++) {
                     System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                 }
                 selection = getInt();
+                if(selection == -1)
+                    return;
                 try {
                     temp = classes.get(selection - 1);
                 } catch (IndexOutOfBoundsException e) {
@@ -193,11 +200,13 @@ public class AlumniApp {
             Scanner input = new Scanner(System.in);
             while (true) {
                 System.out.println("*************************");
-                System.out.println("Select event index: ");
+                System.out.println("Select event index (or \"exit\" to exit):");
                 for (int i = 0; i < classes.size(); i++) {
                     System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                 }
                 selection = getInt();
+                if(selection == -1)
+                    return;
                 try {
                     temp = classes.get(selection - 1);
                 } catch (IndexOutOfBoundsException e) {
@@ -222,6 +231,7 @@ public class AlumniApp {
     //method for creating a new event
     public static void newEvent(int eventListID, ArrayList classes) {
         int id = eventListID;
+        int seats = 0;
         Scanner input = new Scanner(System.in);
         Training event = new Training();
         System.out.println("This is the event creation menu.");
@@ -232,7 +242,12 @@ public class AlumniApp {
         System.out.println("Who will be presenting the event?");
         event.addPresenter(input.nextLine());
         System.out.println("How many seats are available?");
-        event.setSeats(getInt());
+        seats = getInt();
+        while(seats < 0){
+            System.out.println("You cannot have a negative number of seats!");
+            seats = getInt();
+        }
+        event.setSeats(seats);
         System.out.println("What date will this event take place? (MM/DD/YYYY)");
         event.setDate(Date.inputDate(input));
         System.out.println("What time will it start? (HH:MM:SS)");
@@ -274,70 +289,94 @@ public class AlumniApp {
 
     //method for testing if the user has entered an integer (with no maximum value)
     public static int getInt() {
+        String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
-            if (input.hasNextInt()) {
-                return input.nextInt();
-            } else {
-                String temp = input.nextLine();
-                System.out.println("ERROR! Please enter a valid integer!");
+            optionStr = input.nextLine();
+            if(optionStr.equals("x") || optionStr.equals("exit"))
+                return -1;
+            try{
+                option = Integer.parseInt(optionStr);
             }
+            catch(NumberFormatException e){
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            return option;
         }
     }
 
     //method for testing if the user has entered an integer (with a maximum value)
     public static int getInt(int max) {
+        String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
-            if (input.hasNextInt()) {
-                option = input.nextInt();
-                if (option <= max) {
-                    return option;
-                } else {
-                    System.out.println("ERROR! The selected number is invalud! Please enter a value of at most " + max + ".");
-                }
+            optionStr = input.nextLine();
+            if(optionStr.equals("x") || optionStr.equals("exit"))
+                return -1;
+            try{
+                option = Integer.parseInt(optionStr);
+            }
+            catch(NumberFormatException e){
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            if (option <= max) {
+                return option;
             } else {
-                String temp = input.nextLine();
-                System.out.println("ERROR! The selected number is invalid! Please enter a value up to " + max + ".");
+                System.out.println("ERROR! The selected number is invalud! Please enter a value of at most " + max + ".");
             }
         }
     }
 
     //method for testing if the user has entered an integer (with a maximum and minimum value)
     public static int getInt(int min, int max) {
+        String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
-            if (input.hasNextInt()) {
-                option = input.nextInt();
-                if (option >= min && option <= max) {
-                    return option;
-                } else {
-                    System.out.println("ERROR! The selected number is invalud! Please enter a value from " + min + " to " + max + ".");
-                }
-            } else {
-                String temp = input.nextLine();
+            optionStr = input.nextLine();
+            if(optionStr.equals("x") || optionStr.equals("exit"))
+                return -1;
+            try{
+                option = Integer.parseInt(optionStr);
+            }
+            catch(NumberFormatException e){
                 System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            if (option >= min && option <= max) {
+                return option;
+            } else {
+                System.out.println("ERROR! The selected number is invalud! Please enter a value from " + min + " to " + max + ".");
             }
         }
     }
 
     public static double getDollarAmount(double min) {
+        String optionStr;
         double option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
-            if (input.hasNextDouble()) {
-                option = input.nextDouble();
-                if (option >= min) {
-                    return option;
-                }
+            optionStr = input.nextLine();
+            if(optionStr.equals("x") || optionStr.equals("exit"))
+                break;
+            try{
+                option = Double.parseDouble(optionStr);
+            }
+            catch(NumberFormatException e){
+                System.out.println("ERROR! Please enter a valid integer!");
+                continue;
+            }
+            if (option >= min) {
+                return option;
             } else {
-                String temp = input.nextLine();
-                System.out.println("ERROR! The selected number is invalid! Please enter a value of at least " + min + ".");
+                System.out.println("ERROR! The selected number is invalud! Please enter a value of at least " + min + ".");
             }
         }
+        return -1;
     }
 
     public static void printNameTag(String User) {
