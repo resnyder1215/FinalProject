@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This is the main class as well as menus and small methods.
  */
 package association;
 
@@ -11,23 +9,17 @@ import java.util.ArrayList;
 
 public class AlumniApp {
 
+
     public static void main(String[] args) {
-        //used to set the index for students
+ 
         int studentListID = 0;
-        //used to set the index for events
         int eventListID = 0;
         Donations alumni = new Donations();
         Scanner input = new Scanner(System.in);
-        //ArrayLists can store objects and don't have a set size!
-        //This one is for the student OBJECTS
         ArrayList<Alumni> students = new ArrayList<>();
-        //This one is for the event OBJECTS
         ArrayList<Training> classes = new ArrayList<>();
-        //Alumni[] students = new Alumni[COUNT];
-        //Training[] classes = new Training[COUNT];
-        //Username 
         String User = "null";
-        //Session
+ 
         boolean logIn = true;
         int option = 0;
         /**
@@ -38,8 +30,8 @@ public class AlumniApp {
             if ("null".equals(User)) {
                 printMenuNew(); //Print the menu for a new user which asks them to register, but they can select other things
                 System.out.println("Please select an option!");
-                option = getInt(1, 3);
-                //If option is (1), it pulls the newAlumni method so that they can register as an alumni
+                option = getOption(1, 3);
+             
                 switch (option) {
 
                     case 1:
@@ -60,7 +52,7 @@ public class AlumniApp {
                 }
             } else {
                 printMenuLogged(User);
-                option = getInt(1, 8);
+                option = getOption(1, 8);
                 switch (option) {
                     case 1:
                         printNameTag(User);
@@ -81,7 +73,7 @@ public class AlumniApp {
                         break;
                     case 5:
                         menuDonation(alumni);
-                        option = getInt(1, 2);
+                        option = getOption(1, 2);
                         switch (option) {
                             case 1:
                                 makeDonation(alumni, User);
@@ -99,10 +91,33 @@ public class AlumniApp {
                         System.out.println(" ");
                         break;
                     case 7:
-                        for (int i = 0; i < classes.size(); i++) {
-                            System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
-                        }
-                        System.out.println(" ");
+                        printReportMenu();
+                        option = getOption(1, 3);
+                        switch (option) {
+                            case 1:
+                                for (int i = 0; i < students.size(); i++) {
+                                System.out.println("[ " + (i + 1) + " ]" + students.get(i));
+                                }
+                                System.out.println(" ");
+                                break;
+                            case 2:
+                                if(classes.size() > 0){
+                                for (int i = 0; i < classes.size(); i++) {
+                                System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
+                                }
+                                System.out.println(" ");}
+                                else
+                                    System.out.println("No events to report.");
+                                System.out.println(" ");
+                                break;
+                            case 3:
+                                System.out.printf("Current donations goal: $%.2f\n", alumni.getDonationGoal());
+                                System.out.printf("Current amount donated: $%.2f\n", alumni.getDonations());
+                                System.out.println(" ");
+                                break;
+                            default:
+                                break;
+                                        }
                         break;
                     case 8:
                         User = "null";
@@ -116,22 +131,30 @@ public class AlumniApp {
 
     }
 
-    //method for printing a logged in user menu
+    
+
+    /**
+     * After a user is logged in they are presented with this menu
+     * @param user the username of the person registered
+     */
     public static void printMenuLogged(String user) {
         System.out.println("Welcome, " + user + ". Please select an option.");
         System.out.println("*************************");
         System.out.println("1. Print Name Tag");
-        System.out.println("2. Register an Event");
+        System.out.println("2. Create an Event");
         System.out.println("3. Attend an event as a guest");
-        System.out.println("4. Attend an event as a speaker");
+        System.out.println("4. Register a speaker for an event");
         System.out.println("5. Donate");
         System.out.println("6. FAQ/contact us!");
-        System.out.println("7. Events");
-        System.out.println("8. Exit");
+        System.out.println("7. Reports");
+        System.out.println("8. Log Out");
         System.out.println(" ");
     }
 
-    //method for printing a new user menu
+
+    /**
+     * Before a user registers they are shown this menu
+     */
     public static void printMenuNew() {
         System.out.println("Welcome, please register to continue!");
         System.out.println("*************************");
@@ -141,7 +164,23 @@ public class AlumniApp {
         System.out.println(" ");
     }
 
-    //method for printing donation menu
+    /**
+     * This menu is for printing reports of Users, Events, and Donations
+     */
+    public static void printReportMenu() {
+        System.out.println("Select a report to print: ");
+        System.out.println("*************************");
+        System.out.println("1. Users");
+        System.out.println("2. Events");
+        System.out.println("3. Donations");
+        System.out.println("3. Exit");
+        System.out.println(" ");
+    }
+
+    /**
+     * This is a menu for making donations.
+     * @param alumni imported alumni object for pulling donations
+     */
     public static void menuDonation(Donations alumni) {
         System.out.println("This is our donations page!");
         System.out.println("*************************");
@@ -152,7 +191,11 @@ public class AlumniApp {
         System.out.println(" ");
     }
 
-    //method for making donation
+    /**
+     *
+     * @param alumni imported alumni object for pulling donations
+     * @param user the username of the person donating
+     */
     public static void makeDonation(Donations alumni, String user) {
         double donation;
         System.out.println("What would you like to donate (or type \"exit\" to exit):?");
@@ -161,9 +204,15 @@ public class AlumniApp {
         System.out.println("Current TOP Donators: ");
         System.out.printf("\t1. %-50s $%.2f\n\t2. %-50s $%.2f\n\t3. %-50s $%.2f\n", alumni.getMaxDonor(0) + ':', alumni.getMaxDonation(0), alumni.getMaxDonor(1) + ':', alumni.getMaxDonation(1), alumni.getMaxDonor(2) + ':', alumni.getMaxDonation(2));
         System.out.println(" ");
+        System.out.printf("Current donations goal: $%.2f\n", alumni.getDonationGoal());
+        System.out.printf("Current amount donated: $%.2f\n", alumni.getDonations());
+        System.out.println(" ");
     }
 
-    //method for attending event as a guest
+    /**
+     * Method for attending an event as a guest
+     * @param classes import of the ArrayList for handling events and training
+     */
     public static void attendEventGuest(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
@@ -174,9 +223,10 @@ public class AlumniApp {
                 for (int i = 0; i < classes.size(); i++) {
                     System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                 }
-                selection = getInt();
-                if(selection == -1)
+                selection = getOption();
+                if (selection == -1) {
                     return;
+                }
                 try {
                     temp = classes.get(selection - 1);
                 } catch (IndexOutOfBoundsException e) {
@@ -193,6 +243,10 @@ public class AlumniApp {
         }
     }
 
+    /**
+     * Method for attending an event as a speaker
+     * @param classes import of ArrayList for trainings and events
+     */
     public static void attendEventSpeaker(ArrayList<Training> classes) {
         Training temp;
         int selection = 0;
@@ -204,9 +258,10 @@ public class AlumniApp {
                 for (int i = 0; i < classes.size(); i++) {
                     System.out.println("[ " + (i + 1) + " ]" + classes.get(i));
                 }
-                selection = getInt();
-                if(selection == -1)
+                selection = getOption();
+                if (selection == -1) {
                     return;
+                }
                 try {
                     temp = classes.get(selection - 1);
                 } catch (IndexOutOfBoundsException e) {
@@ -228,7 +283,11 @@ public class AlumniApp {
         System.out.println(" ");
     }
 
-    //method for creating a new event
+    /**
+     * Method for registering a new event
+     * @param eventListID a running tally of each event registered in main
+     * @param classes the ArrayList for handling training and events
+     */
     public static void newEvent(int eventListID, ArrayList classes) {
         int id = eventListID;
         int seats = 0;
@@ -242,13 +301,13 @@ public class AlumniApp {
         System.out.println("Who will be presenting the event?");
         event.addPresenter(input.nextLine());
         System.out.println("How many seats are available?");
-        seats = getInt();
-        while(seats < 0){
+        seats = getOption();
+        while (seats < 0) {
             System.out.println("You cannot have a negative number of seats!");
-            seats = getInt();
+            seats = getOption();
         }
         event.setSeats(seats);
-        System.out.println("What date will this event take place? (MM/DD/YYYY)");
+        System.out.println("What future date will this event take place? (MM/DD/YYYY)");
         event.setDate(Date.inputDate(input));
         System.out.println("What time will it start? (HH:MM:SS)");
         event.setTime(Time.inputTime(input));
@@ -260,7 +319,12 @@ public class AlumniApp {
         System.out.println(" ");
     }
 
-    //method for registering new alumni
+    /**
+     * Method for registering as a new user
+     * @param studentListID a running tally for each user that registers in main
+     * @param students the ArrayList for handling new users and alumni
+     * @return the username of the person registered
+     */
     public static String newAlumni(int studentListID, ArrayList students) {
         String User;//the user name to be returned
         int id = studentListID;
@@ -287,19 +351,22 @@ public class AlumniApp {
         return User;
     }
 
-    //method for testing if the user has entered an integer (with no maximum value)
-    public static int getInt() {
+    /**
+     * Method for integer input validation
+     * @return the option if it is valid
+     */
+    public static int getOption() {
         String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
             optionStr = input.nextLine();
-            if(optionStr.equals("x") || optionStr.equals("exit"))
+            if (optionStr.equals("x") || optionStr.equals("exit")) {
                 return -1;
-            try{
-                option = Integer.parseInt(optionStr);
             }
-            catch(NumberFormatException e){
+            try {
+                option = Integer.parseInt(optionStr);
+            } catch (NumberFormatException e) {
                 System.out.println("ERROR! Please enter a valid integer!");
                 continue;
             }
@@ -307,19 +374,24 @@ public class AlumniApp {
         }
     }
 
-    //method for testing if the user has entered an integer (with a maximum value)
-    public static int getInt(int max) {
+   
+    /**
+     * method for testing if the user has entered an integer (with a maximum value)
+     * @param max the maximum value they can enter
+     * @return the option if valid
+     */
+    public static int getOption(int max) {
         String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
             optionStr = input.nextLine();
-            if(optionStr.equals("x") || optionStr.equals("exit"))
+            if (optionStr.equals("x") || optionStr.equals("exit")) {
                 return -1;
-            try{
-                option = Integer.parseInt(optionStr);
             }
-            catch(NumberFormatException e){
+            try {
+                option = Integer.parseInt(optionStr);
+            } catch (NumberFormatException e) {
                 System.out.println("ERROR! Please enter a valid integer!");
                 continue;
             }
@@ -331,19 +403,24 @@ public class AlumniApp {
         }
     }
 
-    //method for testing if the user has entered an integer (with a maximum and minimum value)
-    public static int getInt(int min, int max) {
+    /**
+     * method for testing if the user has entered an integer (with a maximum and minimum value)
+     * @param min the minimum integer user can enter
+     * @param max the maximum integer user can enter
+     * @return the option if valid
+     */
+    public static int getOption(int min, int max) {
         String optionStr;
         int option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
             optionStr = input.nextLine();
-            if(optionStr.equals("x") || optionStr.equals("exit"))
+            if (optionStr.equals("x") || optionStr.equals("exit")) {
                 return -1;
-            try{
-                option = Integer.parseInt(optionStr);
             }
-            catch(NumberFormatException e){
+            try {
+                option = Integer.parseInt(optionStr);
+            } catch (NumberFormatException e) {
                 System.out.println("ERROR! Please enter a valid integer!");
                 continue;
             }
@@ -355,18 +432,23 @@ public class AlumniApp {
         }
     }
 
+    /**
+     * Method for setting minimum amount a user can donate
+     * @param min the minimum amount one can donate (greater than 0, pretty much)
+     * @return this is an exit command
+     */
     public static double getDollarAmount(double min) {
         String optionStr;
         double option = 0;
         Scanner input = new Scanner(System.in);
         while (true) {
             optionStr = input.nextLine();
-            if(optionStr.equals("x") || optionStr.equals("exit"))
+            if (optionStr.equals("x") || optionStr.equals("exit")) {
                 break;
-            try{
-                option = Double.parseDouble(optionStr);
             }
-            catch(NumberFormatException e){
+            try {
+                option = Double.parseDouble(optionStr);
+            } catch (NumberFormatException e) {
                 System.out.println("ERROR! Please enter a valid integer!");
                 continue;
             }
@@ -379,6 +461,10 @@ public class AlumniApp {
         return -1;
     }
 
+    /**
+     * Prints a name tag for the user using their username and random title
+     * @param User the username of registered user
+     */
     public static void printNameTag(String User) {
         System.out.println("__________________________________");
         System.out.println("|                                 |");
@@ -390,6 +476,10 @@ public class AlumniApp {
         System.out.println(" ");
     }
 
+    /**
+     * The roll table for generating a random superlative
+     * @return a random superlative
+     */
     public static String getSuper() {
         int option = 0;
         String superlative = "Nothing";
@@ -424,6 +514,9 @@ public class AlumniApp {
         return superlative;
     }
 
+    /**
+     * Frequently asked questions for when the option is selected.
+     */
     public static void printFAQ() {
         System.out.println(" Frequently Asked Questions");
         System.out.println("****************************");

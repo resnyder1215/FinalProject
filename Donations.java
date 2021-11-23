@@ -1,9 +1,11 @@
+/*
+* Class for handling donations and donation information
+*/
 
 package association;
 
 import java.util.ArrayList;
 
-//This will be for collecting donations and funding events.
 public class Donations {
     private String donator;
     private double donations;
@@ -27,6 +29,10 @@ public class Donations {
         }
     }
     
+    /**
+     *
+     * @param donator the user making the donation
+     */
     public Donations(String donator){
         this.donator = donator;
         this.donations = 0;
@@ -41,38 +47,80 @@ public class Donations {
         }
     }
 
+    /**
+     *
+     * @return the user making the donation
+     */
     public String getDonator() {
         return donator;
     }
 
+    /**
+     *
+     * @return the amount of donations made so far
+     */
     public double getDonations() {
         return donations;
     }
 
+    /**
+     *
+     * @return the current goal for donations 
+     */
     public double getDonationGoal() {
         return donationGoal;
     }
     
+    /**
+     *
+     * @param index the position in ArrayList
+     * @return
+     */
     public double getMaxDonation(int index) {
         return Double.parseDouble(maxDonations.get(index)[1]);
     }
     
+    /**
+     *
+     * @param index the position in ArrayList
+     * @return
+     */
     public String getMaxDonor(int index){
         return maxDonations.get(index)[DONOR];
     }
     
+    /**
+     *
+     * @param index the position in ArrayList 
+     * @param amount the amount of money donated
+     */
     public void setMaxDonation(int index, double amount){
         this.maxDonations.get(index)[DONATION] = String.format("%.2f", amount);
     }
     
+    /**
+     *
+     * @param index the position in ArrayList
+     * @param amount the amount of money donated
+     */
     public void setMaxDonation(int index, String amount){
         this.maxDonations.get(index)[DONATION] = amount;
     }
     
+    /**
+     *
+     * @param index this position in ArrayList
+     * @param user the current user donating
+     */
     public void setMaxDonor(int index, String user){
         this.maxDonations.get(index)[DONOR] = user;
     }
     
+    /**
+     *
+     * @param user the current user donating
+     * @param amount the amount the user will donate
+     */
     public void donate(String user, double amount){
         if(amount < 0.00)
             System.out.println("ERROR! Cannot donate a negative amount!");
