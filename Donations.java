@@ -74,7 +74,7 @@ public class Donations {
     /**
      *
      * @param index the position in ArrayList
-     * @return
+     * @return the donation dollar amount at the given index 
      */
     public double getMaxDonation(int index) {
         return Double.parseDouble(maxDonations.get(index)[1]);
@@ -83,7 +83,7 @@ public class Donations {
     /**
      *
      * @param index the position in ArrayList
-     * @return
+     * @return the donor at the given index
      */
     public String getMaxDonor(int index){
         return maxDonations.get(index)[DONOR];

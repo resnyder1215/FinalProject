@@ -14,9 +14,6 @@ public class Alumni {
     private String occupation;
     private String organization;
     
-    /**
-     * @class Alumni is the constructor for each student registered
-     */
     public Alumni() {
         
     }

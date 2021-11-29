@@ -193,20 +193,20 @@ import java.util.ArrayList;
      */
     @Override
    public String toString() {
-       String ret = "Event name: " + this.getCourse()+ " |" +
+       String str = "Event name: " + this.getCourse()+ " |" +
                 " Presenters: ";
        for(int i = 0; i < presenter.size(); i++){
-           ret += presenter.get(i);
+           str += presenter.get(i);
            if(i != presenter.size() - 1)
-               ret += ", ";
+               str += ", ";
        }
        
-       ret += " |" + " Seats: "      + this.getSeats() + " |" +
+       str += " |" + " Seats: "      + this.getSeats() + " |" +
                 " Date: "       + this.getDate().toString() + " |" +
                 " Time: "       + this.getTime().toString() + " |" +
                 " Duration: "   + this.getDuration().toString()  + " |" +
                 " Room: "       + this.getRoom();
        
-       return ret;
+       return str;
    }
 }
